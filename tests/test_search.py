@@ -28,3 +28,23 @@ def test_search_no_match():
         )
         == []
     )
+
+
+def test_search_with_punctuation():
+    assert search(
+        [
+            {"id": "doc1", "text": "I am new hexlet boy"},
+            {"id": "doc2", "text": "Is hexlet a programmers site?"},
+            {"id": "doc3", "text": "small cow says moooooo"},
+        ],
+        "hex!",
+    ) == ["doc1", "doc2"]
+
+    assert search(
+        [
+            {"id": "doc1", "text": "I am new hexlet boy"},
+            {"id": "doc2", "text": "Is hexlet a programmers site?"},
+            {"id": "doc3", "text": "small cow says moooooo"},
+        ],
+        ";hex",
+    ) == ["doc1", "doc2"]

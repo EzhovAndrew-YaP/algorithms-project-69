@@ -20,10 +20,24 @@ def get_match_stat(terms: list[str], words: list[str]) -> tuple[int, int]:
     return matched_words_num, all_matches_num
 
 
+def build_index(docs: list[dict[str, str]]) -> dict[str, set[str]]:
+    index: dict[str, set[str]] = {}
+    for doc in docs:
+        words = set(map(delete_punctuation, doc["text"].split()))
+        for word in words:
+            if word not in index:
+                index[word] = set([doc["id"]])
+                continue
+            index[word].add(doc["id"])
+    return index
+
+
 def search(docs: list[dict[str, str]], sentence: str) -> list[str]:
     result = []
     rank = []
     terms = list(map(delete_punctuation, sentence.split()))
+    revert_index = build_index(docs=docs)
+    print(revert_index)
     for doc in docs:
         words = list(map(delete_punctuation, doc["text"].split()))
         matched_words_num, all_matches_num = get_match_stat(terms, words)

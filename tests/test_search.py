@@ -5,22 +5,28 @@ def test_search_empty_collection():
     assert search([], "something") == []
 
 
+def test_search_no_sentence():
+    assert search([{"id": "doc1", "text": "I am new hex let boy, dude"}], "") == [
+        {"id": "doc1", "text": "I am new hex let boy, dude"}
+    ]
+
+
 def test_search_find_exists():
     assert search(
         [
-            {"id": "doc1", "text": "I am new hex let boy"},
             {"id": "doc2", "text": "Is hex let a programmers site?"},
+            {"id": "doc1", "text": "I am new hex let boy, dude"},
             {"id": "doc3", "text": "small cow says moooooo"},
         ],
         "hex",
-    ) == ["doc1", "doc2"]
+    ) == ["doc2", "doc1"]
 
 
 def test_only_one_match():
     assert search(
         [
-            {"id": "doc1", "text": "I am new hex let boy"},
             {"id": "doc2", "text": "Is green let a programmers site?"},
+            {"id": "doc1", "text": "I am new hex let boy"},
             {"id": "doc3", "text": "small cow says moooooo"},
         ],
         "hex",
@@ -31,8 +37,8 @@ def test_search_no_match():
     assert (
         search(
             [
-                {"id": "doc1", "text": "I am new hexlet boy"},
                 {"id": "doc2", "text": "Is hexlet a programmers site?"},
+                {"id": "doc1", "text": "I am new hexlet boy"},
                 {"id": "doc3", "text": "small cow says moooooo"},
             ],
             "Duck",
@@ -44,21 +50,21 @@ def test_search_no_match():
 def test_search_with_punctuation():
     assert search(
         [
-            {"id": "doc1", "text": "I am new hex let boy"},
             {"id": "doc2", "text": "Is hex let a programmers site?"},
+            {"id": "doc1", "text": "I am new ?hex? let ?boy?, dude"},
             {"id": "doc3", "text": "small cow says moooooo"},
         ],
         "hex!",
-    ) == ["doc1", "doc2"]
+    ) == ["doc2", "doc1"]
 
     assert search(
         [
-            {"id": "doc1", "text": "I am new hex let boy"},
             {"id": "doc2", "text": "Is hex let a programmers site?"},
+            {"id": "doc1", "text": "I am new ?hex? let ?boy?, dude"},
             {"id": "doc3", "text": "small cow says moooooo"},
         ],
         ";hex",
-    ) == ["doc1", "doc2"]
+    ) == ["doc2", "doc1"]
 
 
 def test_search_right_rank():

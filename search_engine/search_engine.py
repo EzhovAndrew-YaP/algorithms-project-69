@@ -32,13 +32,11 @@ def tf_idf(
     docs_with_word: int,
 ) -> int:
     tf = word_doc_number / doc_all_words_number
-    idf = math.log(docs_number / docs_with_word)
+    idf = math.log2(1 + (docs_number - docs_with_word + 1) / (docs_with_word + 0.5))
     return tf * idf
 
 
 def search(docs: list[dict[str, str]], sentence: str) -> list[str]:
-    print(docs)
-    print(sentence)
     if not sentence:
         return docs
     result = []
@@ -68,4 +66,5 @@ def search(docs: list[dict[str, str]], sentence: str) -> list[str]:
         while i >= 0 and rank[i] < doc_tf_idf:
             rank[i], rank[i + 1] = rank[i + 1], rank[i]
             result[i], result[i + 1] = result[i + 1], result[i]
+            i -= 1
     return result

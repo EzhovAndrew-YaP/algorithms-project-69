@@ -105,3 +105,13 @@ def test_fuzzy_search():
     ]
 
     assert search(docs, "shoot at me") == ["doc2", "doc1"]
+
+
+def test_search_with_unknown_word():
+    docs = [
+        {"id": "doc1", "text": "I can't shoot straight unless I've had a pint!"},
+        {"id": "doc2", "text": "Don't shoot shoot shoot that thing at me."},
+        {"id": "doc3", "text": "I'm your shooter."},
+    ]
+
+    assert search(docs, "shoot at me, nerd") == ["doc2", "doc1"]

@@ -37,8 +37,6 @@ def tf_idf(
 
 
 def search(docs: list[dict[str, str]], sentence: str) -> list[str]:
-    print(docs)
-    print(sentence)
     if not sentence:
         return docs
     result = []
@@ -47,8 +45,10 @@ def search(docs: list[dict[str, str]], sentence: str) -> list[str]:
     terms = list(map(delete_punctuation, sentence.split()))
     revert_index, words_docs_num = build_index(docs=docs)
     docs_candidates_ids = set()
-    for term in terms:
+    for term in terms[:]:
         term_doc_ids = revert_index.get(term, {})
+        if not term_doc_ids:
+            terms.remove(term)
         docs_candidates_ids |= term_doc_ids.keys()
     for doc_id in docs_candidates_ids:
         doc_tf_idf = 0

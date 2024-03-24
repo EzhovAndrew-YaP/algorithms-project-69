@@ -32,7 +32,9 @@ def tf_idf(
     docs_with_word: int,
 ) -> int:
     tf = word_doc_number / doc_all_words_number
-    idf = math.log2(1 + (docs_number - docs_with_word + 1) / (docs_with_word + 0.5))
+    idf = math.log2(
+        1 + (docs_number - docs_with_word + 1) / (docs_with_word + 0.5)
+    )
     return tf * idf
 
 

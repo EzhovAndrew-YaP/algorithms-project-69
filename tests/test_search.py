@@ -6,9 +6,9 @@ def test_search_empty_collection():
 
 
 def test_search_no_sentence():
-    assert search([{"id": "doc1", "text": "I am new hex let boy, dude"}], "") == [
-        {"id": "doc1", "text": "I am new hex let boy, dude"}
-    ]
+    assert search(
+        [{"id": "doc1", "text": "I am new hex let boy, dude"}], ""
+    ) == [{"id": "doc1", "text": "I am new hex let boy, dude"}]
 
 
 def test_search_find_exists():
@@ -42,8 +42,7 @@ def test_search_no_match():
                 {"id": "doc3", "text": "small cow says moooooo"},
             ],
             "Duck",
-        )
-        == []
+        ) == []
     )
 
 
@@ -94,7 +93,9 @@ def test_fuzzy_search():
 
     assert search(docs, "shoot at me") == ["doc2", "doc1"]
 
-    doc1 = "I can't shoot shoot shoot shoot shoot straight unless I've had a pint!"
+    doc1 = (
+        "I can't shoot shoot shoot shoot shoot straight unless I've had a pint!"
+    )
     doc2 = "Don't shoot that thing at me."
     doc3 = "I'm your shooter."
 
@@ -109,7 +110,10 @@ def test_fuzzy_search():
 
 def test_search_with_unknown_word():
     docs = [
-        {"id": "doc1", "text": "I can't shoot straight unless I've had a pint!"},
+        {
+            "id": "doc1",
+            "text": "I can't shoot straight unless I've had a pint!",
+        },
         {"id": "doc2", "text": "Don't shoot shoot shoot that thing at me."},
         {"id": "doc3", "text": "I'm your shooter."},
     ]

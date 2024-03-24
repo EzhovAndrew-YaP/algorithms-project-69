@@ -37,6 +37,8 @@ def tf_idf(
 
 
 def search(docs: list[dict[str, str]], sentence: str) -> list[str]:
+    print(docs)
+    print(sentence)
     if not sentence:
         return docs
     result = []
